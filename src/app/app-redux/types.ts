@@ -1,14 +1,22 @@
+import { ErrorInfo } from 'react';
+import { DashboardState } from '../dashboard/redux/types';
+
 /**
- * The top-level state  object
+ * The top-level state object
  */
-
-// tslint:disable no-empty-interface
 export interface ApplicationState {
+  dashboard: DashboardState;
 }
-// tslint:enable no-empty-interface
+// tslint:disable-next-line no-empty-interface
+export interface GlobalAppState { }
+export interface GlobalAppActions { }
+export interface GlobalAppProps { }
 
-// tslint:disable no-empty-interface
-export interface AppProps {
-
+export interface HandleErrorProps {
+  internalErrorData: InternalErrorData;
 }
-// tslint:enable no-empty-interface
+
+export interface InternalErrorData {
+  hasInternalError: boolean;
+  infoInternalError: ErrorInfo;
+}

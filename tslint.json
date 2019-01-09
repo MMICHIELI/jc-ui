@@ -3,8 +3,12 @@
     "tslint-react"
   ],
   "rules": {
+    "array-type": [
+      false,
+      "array"
+    ],
     "align": [
-      true,
+      false,
       "parameters",
       "arguments",
       "statements"
@@ -27,12 +31,13 @@
       "never-prefix"
     ],
     "jsdoc-format": true,
+    "jsx-boolean-value": false,
     "jsx-no-lambda": false,
     "jsx-no-multiline-js": false,
     "label-position": true,
     "max-line-length": [
       true,
-      120
+      160
     ],
     "member-ordering": [
       true,
@@ -43,6 +48,7 @@
     "no-any": true,
     "no-arg": true,
     "no-bitwise": true,
+    "no-unsafe-any": false,
     "no-console": [
       true,
       "log",
@@ -54,17 +60,31 @@
       "trace"
     ],
     "no-consecutive-blank-lines": true,
+    "await-promise": false,
+    "no-cookies": false,
     "no-construct": true,
-    "no-debugger": true,
+    "no-debugger": false,
+    "no-default-export": false,
     "no-duplicate-variable": true,
     "no-empty": true,
     "no-eval": true,
-    "no-shadowed-variable": true,
+    "no-shadowed-variable": [
+      true,
+      {
+        "class": false,
+        "enum": false,
+        "function": false,
+        "interface": false,
+        "typeActions": false,
+        "typeParameter": false
+      }
+    ],
+    "no-empty-interface": false,
     "no-string-literal": true,
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": false,
-    "no-unused-expression": false,
-    "no-use-before-declare": true,
+    "no-unused-expression": true,
+    "no-use-before-declare": false,
     "one-line": [
       true,
       "check-catch",

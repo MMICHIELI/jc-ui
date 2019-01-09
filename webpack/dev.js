@@ -5,7 +5,6 @@ const CommonConfig = require('./common');
 module.exports = Merge(CommonConfig, {
   mode: 'development',
   entry: [
-    'react-hot-loader/patch',
     'webpack/hot/only-dev-server',
     './index.tsx'
   ],

@@ -1,9 +1,10 @@
 import { ApplicationState } from './types';
 import { applyMiddleware, combineReducers, createStore, Middleware, Reducer, Store } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import dashboardReducer from '../dashboard/redux/dashboardReducer';
 
 const reducers: Reducer<ApplicationState> = combineReducers<ApplicationState>({
-
+  dashboard: dashboardReducer
 });
 
 const logger: Middleware = (applicationStore) => (next) => (action) => {
@@ -31,6 +32,9 @@ if (process.env.MODE_ENV !== 'production') {
   middleWare = composeWithDevTools(middleWare);
 }
 
+/**
+ * Top Level Application Store
+ */
 const store: Store<ApplicationState> = createStore(reducers, {}, middleWare);
 
 export default store;

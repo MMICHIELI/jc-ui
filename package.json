@@ -5,7 +5,7 @@
   "main": "index.tsx",
   "scripts": {
     "clean": "rimraf .cache-loader *dist",
-    "start": "webpack-dev-server --config=webpack/dev.js --open",
+    "start": "env-cmd ./env/.dev.env webpack-dev-server --config=webpack/dev.js --open",
     "build": "npm run clean && env-cmd ./env/.dev.env webpack -p --progress --config=webpack/prod.js --bail",
     "build-prod": "npm run clean && env-cmd ./env/.prod.env webpack -p --progress --config=webpack/prod.js --bail",
     "test": "jest --coverage"
@@ -16,11 +16,11 @@
     "TYPESCRIPT",
     "BABEL 7"
   ],
-  "author": "MICHIELi",
+  "author": "MICHIELI",
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^3.7.1",
-    "@material-ui/icons": "^3.0.1",
+    "@material-ui/icons": "^3.0.2",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "lodash": "^4.17.11",

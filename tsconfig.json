@@ -16,12 +16,13 @@
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
+    "noImplicitThis": false,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "noImplicitThis": false,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
-    "noEmitOnError": true
+    "noEmitOnError": true,
+    "keyofStringsOnly": true
   },
   "include": [
     "./src/**/*"

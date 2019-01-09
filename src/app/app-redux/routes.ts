@@ -1,6 +1,7 @@
 import { RouteComponentProps } from 'react-router';
 
-import Home from '../home/Home';
+import { PATHS } from './constants';
+import Dashboard from '../dashboard/Dashboard';
 
 interface Routes {
   path: string;
@@ -9,8 +10,8 @@ interface Routes {
 
 const routes: Array<Routes> = [
   {
-    path: '/',
-    component: Home
+    path: PATHS.dashboard,
+    component: Dashboard
   }
 ];
 
