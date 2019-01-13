@@ -11,7 +11,7 @@ export const breakPoints = {
 
 export const PATHS = {
   dashboard: '/',
-  theme: 'theme'
+  theme: '/theme'
 };
 
 /**

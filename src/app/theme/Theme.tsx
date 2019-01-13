@@ -21,11 +21,6 @@ const initialState: ThemeContainerState = {
  * Theme Component
  */
 class ThemeComponent extends React.Component<ThemeProps, ThemeContainerState> {
-    public static getDerivedStateFromProps(props: ThemeProps) {
-        return {
-            theme: props.globalAppProps.appState.theme || props.globalAppState.theme
-        };
-    }
 
     constructor(props: ThemeProps) {
         super(props);
@@ -33,18 +28,25 @@ class ThemeComponent extends React.Component<ThemeProps, ThemeContainerState> {
             ...initialState
         };
         this.handleThemeChange = this.handleThemeChange.bind(this);
-        // tslint:disable-next-line:no-console
-        console.log('Theme Value => ', this.state.theme);
+    }
+
+    public componentDidMount() {
+        this.setState({
+            theme: this.props.application.theme
+        });
     }
 
     public render() {
-        const { theme } = this.state;
+        // const { theme } = this.state;
+        // const radioGroupRef = React.useRef(null);
 
+        // tslint:disable-next-line:no-console
+        console.log('Props Actuel => ', this.props);
         return (
             <Grid id="theme-container" container spacing={8}>
                 <Paper>
                     <h1>Themes Page</h1>
-                    <h3>Actual Theme is `${theme}`</h3>
+                    <h3>Actual Theme is </h3>
                 </Paper>
             </Grid>
         );
@@ -54,7 +56,7 @@ class ThemeComponent extends React.Component<ThemeProps, ThemeContainerState> {
         this.setState({
             /* theme: event.target */
         }, () => {
-            this.props.globalAppProps.actions.themeChange(this.props.globalAppState.theme);
+            this.props.globalAppProps.actions.themeChange(this.state.theme);
         });
     }
 }

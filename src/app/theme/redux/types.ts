@@ -9,6 +9,6 @@ export interface ThemeContainerState {
 }
 
 export interface ThemeProps extends RouteComponentProps {
-    globalAppState: GlobalAppState;
+    application: GlobalAppState;
     globalAppProps: GlobalAppProps;
 }
