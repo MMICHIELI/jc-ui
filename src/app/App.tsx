@@ -1,35 +1,64 @@
 import * as React from 'react';
 import * as lod from 'lodash';
-import { MuiThemeProvider } from '@material-ui/core';
-import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Dispatch, bindActionCreators } from 'redux';
+import { MuiThemeProvider } from '@material-ui/core';
 
-import { GlobalAppProps } from './app-redux/types';
 import routes from './app-redux/routes';
-import store from './app-redux/store';
-import { THEMES } from './app-redux/constants';
+import { GlobalAppProps, ApplicationState, GlobalAppState } from './app-redux/types';
+import { INIT_APP_STATE } from './app-redux/constants';
+
+import { AppWrapper, MainContainer } from './app-redux/GlobalStyled';
+import { appActions } from './app-redux/appActions';
+import { connect } from 'react-redux';
 
 /**
  * Root Component for Justine & Co
  */
-export default class App extends React.Component<GlobalAppProps> {
-  public render() {
-    // tslint:disable no-unsafe-any
-    const containers = lod.map(routes, ({ path, component }, key) => (
-      // tslint:enable no-unsafe-any
-      <Route exact={true} path={path} component={component} key={key} />)
-    );
+class AppContainer extends React.Component<GlobalAppProps, GlobalAppState> {
+    constructor(props: GlobalAppProps) {
+        super(props);
+        this.state = {
+            ...INIT_APP_STATE
+        };
+    }
 
-    return (
+    public render() {
 
-      <Provider store={store}>
-        <MuiThemeProvider theme={THEMES.SAND}>
-          <Router>
-            <Switch>{containers}</Switch>
-          </Router>
-        </MuiThemeProvider>
-      </Provider >
+        const containers = lod.map(routes, ({ path, component }, key) => (
+            <Route exact={true} path={path} component={component} key={key} />)
+        );
 
-    );
-  }
+        const { theme } = this.state;
+
+        return (
+            <AppWrapper id="jcui-root-wrapper">
+                <MainContainer id="main-container">
+                    {theme &&
+                        <MuiThemeProvider theme={theme}>
+                            <Router>
+                                <Switch>{containers}</Switch>
+                            </Router>
+                        </MuiThemeProvider>
+                    }
+                </MainContainer>
+            </AppWrapper>
+        );
+    }
 }
+
+const mapStateToProps = (state: ApplicationState) => {
+    return {
+        application: state.application
+    };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+        // tslint:disable-next-line:no-any
+        actions: bindActionCreators(lod.omit(appActions, ['Type']) as any, dispatch)
+    };
+};
+
+const App = connect(mapStateToProps, mapDispatchToProps)(AppContainer);
+export default App;

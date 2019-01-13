@@ -1,4 +1,5 @@
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import { GlobalAppState } from './types';
 
 /**
  * JCUI Global Constants
@@ -10,6 +11,7 @@ export const breakPoints = {
 
 export const PATHS = {
   dashboard: '/',
+  theme: 'theme'
 };
 
 /**
@@ -21,7 +23,6 @@ export const THEMES = {
       useNextVariants: true,
     },
     palette: {
-      type: 'dark',
       primary: {
         main: '#6a1b9a',
       },
@@ -36,7 +37,6 @@ export const THEMES = {
       useNextVariants: true,
     },
     palette: {
-      type: 'dark',
       primary: {
         main: '#b2ebf2',
       },
@@ -51,7 +51,6 @@ export const THEMES = {
       useNextVariants: true,
     },
     palette: {
-      type: 'dark',
       primary: {
         main: '#00897b',
       },
@@ -60,4 +59,10 @@ export const THEMES = {
       },
     },
   })
+};
+
+export const THEME_SPACING_UNIT = '8px';
+
+export const INIT_APP_STATE: GlobalAppState = {
+  theme: THEMES.SAND
 };

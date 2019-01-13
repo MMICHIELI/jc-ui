@@ -2,9 +2,9 @@
  * Types for BreakPoints
  */
 export interface ScreenProps {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }
 
 export interface BreakPointProps extends ScreenProps {
-  name: string;
+    name: string;
 }

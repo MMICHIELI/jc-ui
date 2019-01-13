@@ -2,8 +2,10 @@ import { ApplicationState } from './types';
 import { applyMiddleware, combineReducers, createStore, Middleware, Reducer, Store } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import dashboardReducer from '../dashboard/redux/dashboardReducer';
+import appReducer from './appReducer';
 
 const reducers: Reducer<ApplicationState> = combineReducers<ApplicationState>({
+  application: appReducer,
   dashboard: dashboardReducer
 });
 
