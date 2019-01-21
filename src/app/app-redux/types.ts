@@ -1,6 +1,7 @@
 import { ErrorInfo } from 'react';
 import { DashboardState } from '../dashboard/redux/types';
 import { Theme } from '@material-ui/core';
+import { ThemeState } from '../theme/redux/types';
 
 /**
  * The top-level state object
@@ -8,22 +9,23 @@ import { Theme } from '@material-ui/core';
 export interface ApplicationState {
   application: GlobalAppState;
   dashboard: DashboardState;
+  theme: ThemeState;
 }
 
 // Global App Actions
 export interface GlobalAppActions {
-  themeChange(theme?: Theme): Theme;
+  themeChange(theme: Theme): Theme;
 }
 
 // Global App State
 export interface GlobalAppState {
-  theme?: Theme;
+  theme: Theme;
 }
 
 // Global App Props
 export interface GlobalAppProps {
   actions: GlobalAppActions;
-  appState: GlobalAppState;
+  application: GlobalAppState;
 }
 
 export interface HandleErrorProps {

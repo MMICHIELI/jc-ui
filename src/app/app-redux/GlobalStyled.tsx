@@ -4,7 +4,7 @@ import { breakPoints, THEME_SPACING_UNIT } from './constants';
 export const AppWrapper = Styled.div`
 display: flex;
 flex-direction: column;
-background: #F4F4F4;
+background: #b0bec5;
 align-items: center; 
 `;
 

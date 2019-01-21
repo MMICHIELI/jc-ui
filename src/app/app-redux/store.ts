@@ -3,10 +3,12 @@ import { applyMiddleware, combineReducers, createStore, Middleware, Reducer, Sto
 import { composeWithDevTools } from 'redux-devtools-extension';
 import dashboardReducer from '../dashboard/redux/dashboardReducer';
 import appReducer from './appReducer';
+import themeReducer from '../theme/redux/themeReducer';
 
 const reducers: Reducer<ApplicationState> = combineReducers<ApplicationState>({
   application: appReducer,
-  dashboard: dashboardReducer
+  dashboard: dashboardReducer,
+  theme: themeReducer
 });
 
 const logger: Middleware = (applicationStore) => (next) => (action) => {

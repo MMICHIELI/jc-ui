@@ -2,15 +2,13 @@ import * as React from 'react';
 import * as lod from 'lodash';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Dispatch, bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { MuiThemeProvider } from '@material-ui/core';
 
 import routes from './app-redux/routes';
 import { GlobalAppProps, ApplicationState, GlobalAppState } from './app-redux/types';
-import { INIT_APP_STATE } from './app-redux/constants';
-
-import { AppWrapper, MainContainer } from './app-redux/GlobalStyled';
 import { appActions } from './app-redux/appActions';
-import { connect } from 'react-redux';
+import { AppWrapper, MainContainer } from './app-redux/GlobalStyled';
 
 /**
  * Root Component for Justine & Co
@@ -18,9 +16,6 @@ import { connect } from 'react-redux';
 class AppContainer extends React.Component<GlobalAppProps, GlobalAppState> {
     constructor(props: GlobalAppProps) {
         super(props);
-        this.state = {
-            ...INIT_APP_STATE
-        };
     }
 
     public render() {
@@ -29,18 +24,19 @@ class AppContainer extends React.Component<GlobalAppProps, GlobalAppState> {
             <Route exact={true} path={path} component={component} key={key} />)
         );
 
-        const { theme } = this.state;
+        // tslint:disable-next-line:no-console
+        console.log('App Props =>', this.props.application);
+
+        const { theme } = this.props.application;
 
         return (
             <AppWrapper id="jcui-root-wrapper">
                 <MainContainer id="main-container">
-                    {theme &&
-                        <MuiThemeProvider theme={theme}>
-                            <Router>
-                                <Switch>{containers}</Switch>
-                            </Router>
-                        </MuiThemeProvider>
-                    }
+                    <MuiThemeProvider theme={theme}>
+                        <Router>
+                            <Switch>{containers}</Switch>
+                        </Router>
+                    </MuiThemeProvider>
                 </MainContainer>
             </AppWrapper>
         );

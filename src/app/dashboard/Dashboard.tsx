@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as lod from 'lodash';
 import { bindActionCreators, Dispatch } from 'redux';
 
-import { Button, Fab, TextField, Grid, Paper } from '@material-ui/core';
+import { Button, Fab, TextField, Grid, Paper, Radio, RadioGroup, FormControlLabel } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
@@ -11,6 +11,9 @@ import { ApplicationState } from '../app-redux/types';
 import { dashboardActions } from './redux/dashboardActions';
 import { connect } from 'react-redux';
 import { FormWrapper } from '../app-redux/GlobalStyled';
+import { THEMES } from '../app-redux/constants';
+import { appActions } from '../app-redux/appActions';
+import { Link } from 'react-router-dom';
 
 const initialDashboardState: DashboardContainerState = {
     word: '',
@@ -33,6 +36,22 @@ class DashboardContainer extends React.Component<DashboardProps, DashboardContai
             ...initialDashboardState,
         };
         this.handleWordChange = this.handleWordChange.bind(this);
+        this.handleThemeChange = this.handleThemeChange.bind(this);
+    }
+
+    public componentWillMount() {
+        this.setState({
+            theme: this.props.application.theme
+        }, () => {
+            lod.forEach(THEMES, ({ label, muiTheme }) => {
+                if (muiTheme === this.state.theme) {
+                    this.setState({
+                        currentTheme: label
+                    });
+                }
+            });
+        });
+
     }
 
     public componentDidCatch(error: Error, info: React.ErrorInfo) {
@@ -47,7 +66,7 @@ class DashboardContainer extends React.Component<DashboardProps, DashboardContai
     }
 
     public render() {
-        const { word } = this.state;
+        const { word, currentTheme } = this.state;
 
         return (
             <Grid id="home_container" container spacing={8}>
@@ -63,9 +82,26 @@ class DashboardContainer extends React.Component<DashboardProps, DashboardContai
                                 value={word}
                                 onChange={this.handleWordChange}
                                 margin="normal"
-                                variant="filled"
+                                variant="outlined"
                             />
                         </FormWrapper>
+                        <RadioGroup
+                            aria-label="theme-selector"
+                            name="theme-selector"
+                            onChange={this.handleThemeChange}
+                        >
+                            {lod.map(THEMES, ({ label }, id) => (
+                                <FormControlLabel
+                                    key={id}
+                                    value={label}
+                                    control={<Radio checked={currentTheme === label} />}
+                                    label={label}
+                                />
+                            ))}
+                        </RadioGroup>
+                        <Button variant="contained" color="secondary">
+                            <Link to="/theme">Theme</Link>
+                        </Button>
                     </Paper>
                     {word &&
                         <Paper ><h3>Hello {word}</h3></Paper>
@@ -141,18 +177,34 @@ class DashboardContainer extends React.Component<DashboardProps, DashboardContai
             this.props.actions.wordChange(this.state.word);
         });
     }
+
+    private handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        lod.map(THEMES, ({ muiTheme, label }) => {
+            if (label === event.target.value) {
+                this.setState({
+                    currentTheme: label,
+                    theme: muiTheme
+                }, () => {
+                    this.props.appActions.themeChange(muiTheme);
+                });
+            }
+        });
+    }
 }
 
 const mapStateToProps = (state: ApplicationState) => {
     return {
-        dashboard: state.dashboard
+        dashboard: state.dashboard,
+        application: state.application
     };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        // tslint:disable-next-line:no-any
-        actions: bindActionCreators(lod.omit(dashboardActions, ['Type']) as any, dispatch)
+        // tslint:disable:no-any
+        actions: bindActionCreators(lod.omit(dashboardActions, ['Type']) as any, dispatch),
+        appActions: bindActionCreators(lod.omit(appActions, ['Type']) as any, dispatch)
+        // tslint:enable:no-any
     };
 };
 
