@@ -13,7 +13,6 @@ module.exports = Merge(CommonConfig, {
     path: resolve(__dirname, '../dist'),
     publicPath: `/${process.env.PROJECT}/`
   },
-  devtool: 'source-map',
   plugins: [
 
     new CleanWebpack([ 'dist' ],
@@ -33,8 +32,9 @@ module.exports = Merge(CommonConfig, {
     ),
 
     new Uglifyjs({
+      cache: true,
       parallel: true,
-      sourceMap: false
+      sourceMap: true
     })
   ]
 });
