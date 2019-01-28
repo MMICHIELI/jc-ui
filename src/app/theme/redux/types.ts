@@ -5,6 +5,9 @@ import { InternalErrorData, GlobalAppState, GlobalAppProps } from '../../app-red
 // Container State
 export interface ThemeContainerState {
     primaryMain?: string;
+    secondaryMain?: string;
+    type?: string;
+    themeName?: string;
     internalErrorData: InternalErrorData;
     formTouched: boolean;
 }
@@ -13,8 +16,8 @@ export interface ThemeContainerState {
 export interface ThemeActions {
     primaryMainChange(value?: string): string;
     secondaryMainChange(value?: string): string;
-    type(value?: boolean): string;
-    themeName(value?: string): string;
+    typeChange(value?: string): string;
+    themeNameChange(value?: string): string;
 }
 
 // Theme page Props
@@ -32,3 +35,8 @@ export interface ThemeState {
     type?: string;
     themeName?: string;
 }
+
+export const typesOptions: Array<string> = [
+    'dark',
+    'light'
+];

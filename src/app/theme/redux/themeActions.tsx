@@ -13,6 +13,6 @@ export namespace themeActions {
 
     export const primaryMainChange = createAction(Type.PRIMARY_MAIN_CHANGED, (color: string | undefined) => color);
     export const secondaryMainChange = createAction(Type.SECONDARY_MAIN_CHANGED, (color: string | undefined) => color);
-    export const typeChange = createAction(Type.TYPE_CHANGED, (type: boolean) => type ? '' : 'dark');
+    export const typeChange = createAction(Type.TYPE_CHANGED, (type: string | undefined) => type);
     export const themeNameChange = createAction(Type.THEME_NAME_CHANGED, (name: string) => name);
 }

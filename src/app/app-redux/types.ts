@@ -36,3 +36,10 @@ export interface InternalErrorData {
   hasInternalError: boolean;
   infoInternalError: ErrorInfo;
 }
+
+export interface RadioOption {
+  id: number;
+  label: string;
+  value: string;
+  checked?: boolean;
+}

@@ -3,15 +3,13 @@ import * as lod from 'lodash';
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import InputMask from 'react-input-mask';
-
 import { ApplicationState } from '../app-redux/types';
 import { ThemeContainerState, ThemeProps } from './redux/types';
 import { themeActions } from './redux/themeActions';
 
-import { Grid, Paper, TextField } from '@material-ui/core';
+import { Grid, Paper } from '@material-ui/core';
 
-import { FormWrapper } from '../app-redux/GlobalStyled';
+import ThemeMaker from './components/ThemeMaker';
 
 // Initial State
 const initialState: ThemeContainerState = {
@@ -35,26 +33,20 @@ class ThemeComponent extends React.Component<ThemeProps, ThemeContainerState> {
         };
         this.handleThemeChange = this.handleThemeChange.bind(this);
         this.handlePrimaryChange = this.handlePrimaryChange.bind(this);
+        this.handleSecondaryChange = this.handleSecondaryChange.bind(this);
+        this.handleTypeChange = this.handleTypeChange.bind(this);
+        this.handleThemeNameChange = this.handleThemeNameChange.bind(this);
     }
 
     public componentWillMount() {
         const { theme } = this.props.application;
-        const { primaryMain } = this.state;
-        if (lod.isNil(primaryMain)) {
+        if (!lod.isNil(theme)) {
             this.setState({
-                primaryMain: theme.palette.primary.main
+                primaryMain: theme.palette.primary.main,
+                secondaryMain: theme.palette.secondary.main,
+                type: theme.palette.type || ''
             });
         }
-    }
-
-    public componentDidMount() {
-        /*         const { theme } = this.props.application;
-                const { primaryMain } = this.state;
-                if (lod.isNil(primaryMain)) {
-                    this.setState({
-                        primaryMain: theme.palette.primary.mains
-                    });
-                } */
     }
 
     public componentDidCatch(error: Error, info: React.ErrorInfo) {
@@ -72,29 +64,24 @@ class ThemeComponent extends React.Component<ThemeProps, ThemeContainerState> {
         // tslint:disable-next-line:no-console
         console.log('Props Actuel => ', this.props);
 
-        const { primaryMain } = this.state;
+        const { primaryMain, secondaryMain, type, themeName } = this.state;
 
         return (
             <Grid id="theme-container" container spacing={8}>
                 <Grid item lg={12} md={12} xs={12}>
                     <h1>Themes Page</h1>
                     <Paper>
-                        <FormWrapper>
-                            <InputMask
-                                mask="#******"
-                                value={primaryMain}
-                                onChange={this.handlePrimaryChange}
-                            >
-                                {() =>
-                                    <TextField
-                                        id="primary"
-                                        label="Primary Color"
-                                        margin="normal"
-                                        variant="outlined"
-                                    />
-                                }
-                            </InputMask>
-                        </FormWrapper>
+                        <ThemeMaker
+                            primaryColor={primaryMain}
+                            secondaryColor={secondaryMain}
+                            type={type}
+                            themeName={themeName}
+                            primaryColorChange={this.handlePrimaryChange}
+                            secondaryColorChange={this.handleSecondaryChange}
+                            typeChange={this.handleTypeChange}
+                            themeNameChange={this.handleThemeNameChange}
+                            internalErrorData={this.state.internalErrorData}
+                        />
                     </Paper>
                 </Grid>
             </Grid>
@@ -105,11 +92,32 @@ class ThemeComponent extends React.Component<ThemeProps, ThemeContainerState> {
         /*         this.setState({
                     /* theme: event.target */
     }
-    private handlePrimaryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    private handlePrimaryChange = (event?: string) => {
         this.setState({
-            primaryMain: event.target.value
+            primaryMain: event
         }, () => {
             this.props.actions.primaryMainChange(this.state.primaryMain);
+        });
+    }
+    private handleSecondaryChange = (event?: string) => {
+        this.setState({
+            secondaryMain: event
+        }, () => {
+            this.props.actions.secondaryMainChange(this.state.secondaryMain);
+        });
+    }
+    private handleTypeChange = (type?: string) => {
+        this.setState({
+            type: type
+        }, () => {
+            this.props.actions.typeChange(this.state.type);
+        });
+    }
+    private handleThemeNameChange = (themeName?: string) => {
+        this.setState({
+            themeName: themeName
+        }, () => {
+            this.props.actions.typeChange(this.state.themeName);
         });
     }
 }

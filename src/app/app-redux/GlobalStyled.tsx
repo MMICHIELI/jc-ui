@@ -26,7 +26,12 @@ ${breakPoints.mobile}{
 `;
 
 export const FormWrapper = Styled.div`
-  & > Button {
+
+  & > Button, & > {
     margin: ${THEME_SPACING_UNIT};
   }
+`;
+
+export const StyledSpan = Styled.span`
+margin: 8px;
 `;

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { HandleErrorProps } from '../../../app-redux/types';
 
+import { ErrorWrapper, ErrorTitle, ErrorLabel, Error } from './HandleErrorStyled';
+
 /**
  * HandleError Top level components to handle errors
  * @param WrappedComponent 
@@ -11,11 +13,11 @@ const HandleError = <ComponentProps extends object>(WrappedComponent: React.Comp
             if (this.props.internalErrorData !== null && this.props.internalErrorData !== undefined) {
                 return this.props.internalErrorData.hasInternalError ?
                     (
-                        <div>
-                            <h3>Oh Shit! </h3>
-                            <p> Something went wrong while displaying {WrappedComponent.name} Component.</p>
-                            <span> {this.props.internalErrorData.infoInternalError.componentStack} </span>
-                        </div>
+                        <ErrorWrapper>
+                            <ErrorTitle>Oh Shit! </ErrorTitle>
+                            <ErrorLabel> Something went wrong while displaying <span>{WrappedComponent.name}</span>.</ErrorLabel>
+                            <Error> {this.props.internalErrorData.infoInternalError.componentStack} </Error>
+                        </ErrorWrapper>
                     )
                     : <WrappedComponent {...this.props} />;
             }
