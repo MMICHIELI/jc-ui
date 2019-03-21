@@ -57,9 +57,6 @@ class ThemeMakerComponent extends React.Component<ThemeMakerProps, ThemeMakerSta
             ...initialState,
         };
 
-        this.handlePrimaryChange = this.handlePrimaryChange.bind(this);
-        this.handleSecondaryChange = this.handleSecondaryChange.bind(this);
-        this.handleTypeChange = this.handleTypeChange.bind(this);
         this.handleThemeNameChange = this.handleThemeNameChange.bind(this);
     }
 
@@ -92,7 +89,18 @@ class ThemeMakerComponent extends React.Component<ThemeMakerProps, ThemeMakerSta
     }
 
     public render() {
-        const { primaryColor, secondaryColor, radioOptions, themeName } = this.state;
+        const {
+            primaryColor,
+            secondaryColor,
+            radioOptions,
+            themeName
+        } = this.state;
+
+        const {
+            primaryColorChange,
+            secondaryColorChange,
+            typeChange
+        } = this.props;
 
         // tslint:disable-next-line:no-console
         console.log('ThemeMaker radioOptions: ', radioOptions);
@@ -103,14 +111,14 @@ class ThemeMakerComponent extends React.Component<ThemeMakerProps, ThemeMakerSta
                         id="primary-main-field"
                         label="Primary Color"
                         value={primaryColor}
-                        onChange={this.handlePrimaryChange}
+                        onChange={primaryColorChange}
                         internalErrorData={this.state.internalErrorData}
                     />
                     <ColorInput
                         id="secondary-main-field"
                         label="Secondary Color"
                         value={secondaryColor}
-                        onChange={this.handleSecondaryChange}
+                        onChange={secondaryColorChange}
                         internalErrorData={this.state.internalErrorData}
                     />
                 </Grid>
@@ -119,7 +127,7 @@ class ThemeMakerComponent extends React.Component<ThemeMakerProps, ThemeMakerSta
                         id="type-selector"
                         legend="Type"
                         options={radioOptions}
-                        onChange={this.handleTypeChange}
+                        onChange={typeChange}
                         internalErrorData={this.state.internalErrorData}
                     />
                 </Grid>
@@ -138,33 +146,11 @@ class ThemeMakerComponent extends React.Component<ThemeMakerProps, ThemeMakerSta
             </FormWrapper >
         );
     }
-
-    private handlePrimaryChange = (color?: string) => {
-        this.setState({
-            primaryColor: color
-        }, () => {
-            this.props.primaryColorChange(this.state.primaryColor);
-        });
-    }
-    private handleSecondaryChange = (color?: string) => {
-        this.setState({
-            secondaryColor: color
-        }, () => {
-            this.props.secondaryColorChange(this.state.secondaryColor);
-        });
-    }
-    private handleTypeChange = (type?: string) => {
-        this.setState({
-            type: type
-        }, () => {
-            this.props.typeChange(this.state.type);
-        });
-    }
     private handleThemeNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({
             themeName: event.target.value
         }, () => {
-            this.props.themeNameChange(this.state.themeName);
+            this.props.typeChange(this.state.themeName);
         });
     }
 }

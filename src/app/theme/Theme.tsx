@@ -32,10 +32,6 @@ class ThemeComponent extends React.Component<ThemeProps, ThemeContainerState> {
             ...initialState
         };
         this.handleThemeChange = this.handleThemeChange.bind(this);
-        this.handlePrimaryChange = this.handlePrimaryChange.bind(this);
-        this.handleSecondaryChange = this.handleSecondaryChange.bind(this);
-        this.handleTypeChange = this.handleTypeChange.bind(this);
-        this.handleThemeNameChange = this.handleThemeNameChange.bind(this);
     }
 
     public componentWillMount() {
@@ -65,6 +61,7 @@ class ThemeComponent extends React.Component<ThemeProps, ThemeContainerState> {
         console.log('Props Actuel => ', this.props);
 
         const { primaryMain, secondaryMain, type, themeName } = this.state;
+        const { actions } = this.props;
 
         return (
             <Grid id="theme-container" container spacing={8}>
@@ -76,10 +73,10 @@ class ThemeComponent extends React.Component<ThemeProps, ThemeContainerState> {
                             secondaryColor={secondaryMain}
                             type={type}
                             themeName={themeName}
-                            primaryColorChange={this.handlePrimaryChange}
-                            secondaryColorChange={this.handleSecondaryChange}
-                            typeChange={this.handleTypeChange}
-                            themeNameChange={this.handleThemeNameChange}
+                            primaryColorChange={actions.primaryMainChange}
+                            secondaryColorChange={actions.secondaryMainChange}
+                            typeChange={actions.typeChange}
+                            themeNameChange={actions.themeNameChange}
                             internalErrorData={this.state.internalErrorData}
                         />
                     </Paper>
@@ -91,34 +88,6 @@ class ThemeComponent extends React.Component<ThemeProps, ThemeContainerState> {
     private handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         /*         this.setState({
                     /* theme: event.target */
-    }
-    private handlePrimaryChange = (event?: string) => {
-        this.setState({
-            primaryMain: event
-        }, () => {
-            this.props.actions.primaryMainChange(this.state.primaryMain);
-        });
-    }
-    private handleSecondaryChange = (event?: string) => {
-        this.setState({
-            secondaryMain: event
-        }, () => {
-            this.props.actions.secondaryMainChange(this.state.secondaryMain);
-        });
-    }
-    private handleTypeChange = (type?: string) => {
-        this.setState({
-            type: type
-        }, () => {
-            this.props.actions.typeChange(this.state.type);
-        });
-    }
-    private handleThemeNameChange = (themeName?: string) => {
-        this.setState({
-            themeName: themeName
-        }, () => {
-            this.props.actions.typeChange(this.state.themeName);
-        });
     }
 }
 
